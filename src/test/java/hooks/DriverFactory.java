@@ -12,8 +12,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
-	public static WebDriver driver;
-
+public static WebDriver driver;
+	
 	public WebDriver initializeDrivers(String browser) {
 
 		if (browser.equalsIgnoreCase("firefox")) {
@@ -44,6 +44,7 @@ public class DriverFactory {
 		// Set Page load timeout
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
 
+		
 		driver.manage().window().maximize();
 
 		return driver;
@@ -56,5 +57,4 @@ public class DriverFactory {
 	public void closeallDriver() {
 		// driver.close();
 	}
-
 }

@@ -7,7 +7,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-//import driverFactory.DriverFactory;
+import hooks.DriverFactory;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
@@ -15,27 +15,29 @@ import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
 //import utilities.ConfigReader;
+import utils.ConfigReader;
 
 public class Hooks {
 
-	private WebDriver driver;
-	private DriverFactory driverfactory;
+	private static WebDriver driver;
+	private static DriverFactory driverfactory;
 	static Scenario scenario;
-	public static ResourceBundle rb;
+	
 	public static String browser;
+	
 
 	@BeforeAll
-	public  void before() throws Throwable {
+	public static void before() throws Throwable {
 		// Get browser Type from config file
 		System.out.println("Loading Config file");
-		//ConfigReader.loadConfig();
-		//String browser = ConfigReader.getBrowserType();
-		rb = ResourceBundle.getBundle("config");
-		browser = rb.getString("browser");
-		// Initialize driver from driver factory
+		ConfigReader.loadConfig();
+		String browser = ConfigReader.getBrowserType();
+		
+		
 		driverfactory = new DriverFactory();
 		driver = driverfactory.initializeDrivers(browser);
 		System.out.println("Initializing driver for : " + browser);
+		
 
 	}
 
@@ -62,9 +64,10 @@ public class Hooks {
 	}
 
 	@AfterAll
-	public void after() {
+	public static void after() {
 		System.out.println("Closing Driver");
 		driverfactory.closeallDriver();
 	}
+
 
 }
